@@ -14,11 +14,13 @@ input.onButtonPressed(Button.A, function () {
 })
 input.onButtonPressed(Button.AB, function () {
     basic.showIcon(IconNames.Skull)
+    logging = false
     datalogger.deleteLog()
     datalogger.setColumnTitles(
     "WaterTemp1mC",
     "WaterTemp3mC"
     )
+    basic.showIcon(IconNames.No)
 })
 input.onButtonPressed(Button.B, function () {
     logging = false
