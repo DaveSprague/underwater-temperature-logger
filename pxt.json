@@ -1,12 +1,12 @@
 {
-    "name": "Underwater Temperature Logger",
+    "name": "UW Temperature Logger V1.0",
     "description": "",
     "dependencies": {
         "core": "*",
         "radio": "*",
         "microphone": "*",
         "datalogger": "*",
-        "NTC": "github:makecode-extensions/ntc#v1.2.0"
+        "NTCeq": "github:DaveSprague/NTCeq#93bec9c289746e912bc7bb10d9351df2be38139d"
     },
     "files": [
         "main.blocks",

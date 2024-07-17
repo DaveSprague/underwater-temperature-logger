@@ -1,3 +1,8 @@
+// A Button, Start logging,
+// 
+// B Button, Stop Logging
+// 
+// A+B Button, DELETE LOG
 datalogger.onLogFull(function () {
     logging = false
     basic.showLeds(`
@@ -17,6 +22,7 @@ input.onButtonPressed(Button.AB, function () {
     logging = false
     datalogger.deleteLog()
     datalogger.setColumnTitles(
+    "Sensor",
     "WaterTemp1mC",
     "WaterTemp3mC"
     )
@@ -27,22 +33,26 @@ input.onButtonPressed(Button.B, function () {
     basic.showIcon(IconNames.No)
 })
 let logging = false
-NTCSensor.set(NTC_B.B3950)
-datalogger.includeTimestamp(FlashLogTimeStampFormat.Seconds)
-datalogger.mirrorToSerial(true)
+let SensorLabel = "Z"
+let samplePeriodSeconds = 1
 logging = false
+NTCSensorEq.setb(NTC_B.B3950)
 basic.showIcon(IconNames.No)
 datalogger.setColumnTitles(
+"Sensor",
 "WaterTemp1mC",
 "WaterTemp3mC"
 )
-loops.everyInterval(5000, function () {
+datalogger.includeTimestamp(FlashLogTimeStampFormat.Seconds)
+datalogger.mirrorToSerial(true)
+loops.everyInterval(samplePeriodSeconds * 1000, function () {
     if (logging) {
         basic.showIcon(IconNames.Happy)
-        datalogger.log(
-        datalogger.createCV("WaterTemp1mC", NTCSensor.Temperature(pins.analogReadPin(AnalogPin.P3))),
-        datalogger.createCV("WaterTemp3mC", NTCSensor.Temperature(pins.analogReadPin(AnalogPin.P4)))
-        )
         basic.clearScreen()
+        datalogger.log(
+        datalogger.createCV("Sensor", SensorLabel),
+        datalogger.createCV("WaterTemp1mC", NTCSensorEq.Temperature(pins.analogReadPin(AnalogPin.P1))),
+        datalogger.createCV("WaterTemp3mC", NTCSensorEq.Temperature(pins.analogReadPin(AnalogPin.P0)))
+        )
     }
 })
